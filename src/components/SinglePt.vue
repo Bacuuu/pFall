@@ -1,6 +1,9 @@
 <template>
-  <div class="photo-wrap" :style="wrapStyle">
+  <div class="pt-wrap" :style="wrapStyle">
     <img v-lazy="imgInfo.imgSrc" alt="" :style="imgStyle">
+    <div class="pt-info">
+      <span>{{imgInfo.poem}}</span>
+    </div>
   </div>
 </template>
 
@@ -27,14 +30,14 @@ export default {
   computed: {
     wrapStyle () {
       return {
-        width: this.imgInfo.width + 8 + 'px',
-        height: this.imgInfo.height + 28 + 'px'
+        width: '100%',
+        height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 'px' : 'auto'
       }
     },
     imgStyle () {
       return {
-        width: this.imgInfo.width + 'px',
-        height: this.imgInfo.height + 'px'
+        width: '100%',
+        height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 'px' : 'auto'
       }
     }
   },
@@ -45,7 +48,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .photo-wrap {
+  .pt-wrap {
+    transition: all .5s;
     background-color: black;
+    img {
+      transition: all .5s;
+    }
+    &:hover {
+      img {
+        transform: scale(0.98);
+      }
+      box-shadow: 0 0 10px #333;
+      // box-sizing: border-box;
+      // border: 8px solid rgba(100, 100, 100, 1)
+    }
+    .pt-info {
+      height: 24px;
+      text-align: left;
+      padding-left: 8px;
+      span {
+        font-size: 16px;
+        color: rgba($color: #eee, $alpha: 1.0)
+      }
+    }
   }
 </style>
