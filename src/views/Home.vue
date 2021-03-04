@@ -1,14 +1,16 @@
 <template>
   <div class="pf-wrap">
     <div class="pf-column" v-for="(item, index) in infoList" :key="index" :style="columnStyle">
-      <single-pt v-for="pt in item" :key="pt.imgSrc" :imgInfo="pt" />
+      <single-pt v-for="pt in item" :key="pt.imgSrc" :imgInfo="pt" @clickPt="clickPt(pt)" />
     </div>
+    <big-pt :imgInfo="biggerPt"></big-pt>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import SinglePt from '@/components/SinglePt';
+import BigPt from '@/components/BigPt'
 import { colsToWidth } from './config'
 import {
   colInsert,
@@ -18,15 +20,17 @@ import {
 export default {
   name: 'Home',
   components: {
-    SinglePt
+    SinglePt,
+    BigPt
   },
   data () {
     return {
       colNums: 4,
-      infoList: []
+      infoList: [],
+      biggerPt: null,
     }
   },
-  mounted() {
+  created() {
     colNumChangeTo(this.colNums)
     this.$axios.get('/api/getImg')
       .then(r => {
@@ -43,6 +47,12 @@ export default {
       }
     }
   },
+  methods: {
+    clickPt (pt) {
+      console.log(pt)
+      this.biggerPt = pt;
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

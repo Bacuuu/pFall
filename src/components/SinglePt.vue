@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-wrap" :style="wrapStyle">
+  <div class="pt-wrap" :style="wrapStyle" @click="clickPt">
     <img v-lazy="imgInfo.imgSrc" alt="" :style="imgStyle">
     <div class="pt-info">
       <span>{{imgInfo.poem}}</span>
@@ -36,13 +36,15 @@ export default {
     },
     imgStyle () {
       return {
-        width: '100%',
+        width: this.imgInfo.vHeight ? 'auto' : '100%',
         height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 'px' : 'auto'
       }
     }
   },
   methods: {
-
+    clickPt () {
+      this.$emit('clickPt',this.imgInfo)
+    }
   }
 }
 </script>
