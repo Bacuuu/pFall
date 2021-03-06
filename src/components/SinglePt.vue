@@ -1,6 +1,6 @@
 <template>
   <div class="pt-wrap" :style="wrapStyle" @click="clickPt">
-    <img v-lazy="imgInfo.imgSrc" alt="" :style="imgStyle">
+    <img v-lazy="imgInfo.imgSrc" alt="" :key="imgInfo.imgSrc" :style="imgStyle">
     <div class="pt-info">
       <span>{{imgInfo.poem}}</span>
     </div>
