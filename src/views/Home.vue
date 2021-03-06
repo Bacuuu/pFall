@@ -3,7 +3,7 @@
     <div class="pf-column" v-for="(item, index) in infoList" :key="index" :style="columnStyle">
       <single-pt v-for="pt in item" :key="pt.imgSrc" :imgInfo="pt" @clickPt="clickPt(pt)" />
     </div>
-    <big-pt :imgInfo="biggerPt"></big-pt>
+    <big-pt :imgInfo="biggerPt" @handleClose="closeBigPt"></big-pt>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     return {
       colNums: 4,
       infoList: [],
-      biggerPt: null,
+      biggerPt: null
     }
   },
   created() {
@@ -51,6 +51,9 @@ export default {
     clickPt (pt) {
       console.log(pt)
       this.biggerPt = pt;
+    },
+    closeBigPt () {
+      this.biggerPt = null
     }
   }
 }

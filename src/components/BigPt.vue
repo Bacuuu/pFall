@@ -1,7 +1,10 @@
 <template>
   <div class="big-wrap" v-show="on">
     <div class="img-wrap">
-      <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :class="imgClass">
+      <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="imgClass">
+    </div>
+    <div class="close-icon" @click="handleClose">
+
     </div>
   </div>
 </template>
@@ -39,6 +42,9 @@ export default {
       this.$nextTick(() => {
         this.imgClass = this.imgClass === 'img-zoomin' ? 'img-zoomout' : 'img-zoomin'
       })
+    },
+    handleClose () {
+      this.$emit('handleClose')
     }
   }
 }
@@ -52,6 +58,7 @@ export default {
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, .432);
+    overflow-x: hidden;
   }
   .img-wrap {
     width: 100%;
@@ -61,6 +68,48 @@ export default {
     align-items: center;
     img {
       transition: all 1s;
+    }
+  }
+  .close-icon {
+    position: absolute;
+    right: -50px;
+    top: -50px;
+    width: 100px;
+    height: 100px;
+    border-bottom-left-radius: 50%;
+    background-color: rgba(0, 0, 0, .45);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+    transition: all .3s;
+    &:before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 68px;
+      width: 16px;
+      height: 2px;
+      background-color: #fff;
+      transform: rotate(45deg);
+      transition: all .3s
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 68px;
+      width: 16px;
+      height: 2px;
+      background-color: #fff;
+      transform: rotate(-45deg);
+      transition: all .3s;
+    }
+    &:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, .8);
+      &:before {
+        transform: rotate(135deg);
+      }
+      &:after {
+        transform: rotate(45deg);
+      }
     }
   }
   .img-zoomin {
