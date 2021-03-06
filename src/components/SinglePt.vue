@@ -31,13 +31,13 @@ export default {
     wrapStyle () {
       return {
         width: '100%',
-        height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 'px' : 'auto'
+        height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 24 + 'px' : 'auto'
       }
     },
     imgStyle () {
       return {
-        width: this.imgInfo.vHeight ? 'auto' : '100%',
-        height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 'px' : 'auto'
+        width: '100%',
+        height: this.imgInfo.vHeight ? this.imgInfo.vHeight + 'px' : 'auto',
       }
     }
   },
@@ -55,6 +55,7 @@ export default {
     background-color: black;
     img {
       transition: all .5s;
+      object-fit: cover;
     }
     &:hover {
       img {

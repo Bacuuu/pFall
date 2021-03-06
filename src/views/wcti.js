@@ -29,7 +29,6 @@ function colInsert(data) {
   }
   // 需要进行插入的index
   const index = findMinIndex(colsHeight);
-  console.log(index);
   // 进行插值操作
   if (whCheck(data)) {
     cols[index].push(data);
