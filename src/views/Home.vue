@@ -12,6 +12,7 @@
 import SinglePt from '@/components/SinglePt';
 import BigPt from '@/components/BigPt'
 import { colsToWidth } from './config'
+import { throttle } from 'throttle-debounce'
 import {
   colInsert,
   colNumChangeTo,
@@ -32,13 +33,10 @@ export default {
   },
   created() {
     colNumChangeTo(this.colNums)
-    this.$axios.get('/api/getImg')
-      .then(r => {
-        r.data.forEach(i => {
-          colInsert(i)
-        })
-        this.infoList = getColData()
-      })
+    this.getData()
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll, true)
   },
   computed: {
     columnStyle () {
@@ -49,11 +47,25 @@ export default {
   },
   methods: {
     clickPt (pt) {
-      console.log(pt)
       this.biggerPt = pt;
     },
     closeBigPt () {
       this.biggerPt = null
+    },
+    handleScroll: throttle(200, false, function () {
+      if ((document.documentElement.offsetHeight - document.documentElement.scrollTop - document.documentElement.clientHeight) < 200) {
+        this.getData()
+        console.log('loading')
+      }
+    }),
+    getData () {
+      this.$axios.get('/api/getImg')
+        .then(r => {
+          r.data.forEach(i => {
+            colInsert(i)
+          })
+          this.infoList = getColData()
+        })
     }
   }
 }
