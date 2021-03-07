@@ -62,16 +62,19 @@ export default {
         transform: scale(0.98);
       }
       box-shadow: 0 0 10px #333;
-      // box-sizing: border-box;
-      // border: 8px solid rgba(100, 100, 100, 1)
     }
     .pt-info {
       height: 24px;
       text-align: left;
       padding-left: 8px;
       span {
+        display: inline-block;
+        width: 100%;
         font-size: 16px;
-        color: rgba($color: #eee, $alpha: 1.0)
+        color: rgba($color: #eee, $alpha: 1.0);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
