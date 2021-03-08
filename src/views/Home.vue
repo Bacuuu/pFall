@@ -1,7 +1,7 @@
 <template>
   <div class="pf-wrap">
     <div class="pf-column" v-for="(item, index) in infoList" :key="index" :style="columnStyle">
-      <single-pt v-for="pt in item" :key="pt.imgSrc" :imgInfo="pt" @clickPt="clickPt(pt)" />
+      <single-pt class="single-pt" v-for="pt in item" :key="pt.imgSrc" :imgInfo="pt" @clickPt="clickPt(pt)" />
     </div>
     <big-pt :imgInfo="biggerPt" @handleClose="closeBigPt"></big-pt>
   </div>
@@ -32,17 +32,25 @@ export default {
     }
   },
   created() {
+    this.judgeWidth();
     colNumChangeTo(this.colNums)
     this.getData()
   },
   mounted () {
-    window.addEventListener('scroll', this.handleScroll, true)
+    window.addEventListener('scroll', this.handleScroll, true);
+    window.addEventListener('resize', this.handleResize, true);
   },
   computed: {
     columnStyle () {
       return {
         width: colsToWidth[this.colNums]
       }
+    }
+  },
+  watch: {
+    colNums (n) {
+      colNumChangeTo(n);
+      this.getData()
     }
   },
   methods: {
@@ -58,6 +66,19 @@ export default {
         console.log('loading')
       }
     }),
+    handleResize: throttle(200, false, function () {
+      this.judgeWidth()
+    }),
+    judgeWidth () {
+      const width = document.documentElement.clientWidth
+      if (width > 1000) {
+        this.colNums = 4;
+      } else if (width > 745) {
+        this.colNums = 3
+      } else {
+        this.colNums = 2
+      }
+    },
     getData () {
       this.$axios.get('/api/getImg')
         .then(r => {
@@ -80,5 +101,8 @@ export default {
 .pf-column {
   display: flex;
   flex-direction: column;
+}
+.single-pt {
+  margin: 4px 0;
 }
 </style>
