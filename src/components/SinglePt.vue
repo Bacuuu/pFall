@@ -53,15 +53,21 @@ export default {
   .pt-wrap {
     transition: all .5s;
     background-color: black;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
     img {
       transition: all .5s;
       object-fit: cover;
     }
     &:hover {
-      img {
-        transform: scale(0.98);
-      }
+      background-color: #ccc;
       box-shadow: 0 0 10px #333;
+      img {
+        transform: scale(0.95);
+      }
+      .pt-info span {
+        color: black
+      }
     }
     .pt-info {
       height: 24px;
@@ -70,7 +76,7 @@ export default {
       span {
         display: inline-block;
         width: 100%;
-        font-size: 16px;
+        font-size: 14px;
         color: rgba($color: #eee, $alpha: 1.0);
         overflow: hidden;
         text-overflow: ellipsis;
