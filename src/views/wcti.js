@@ -62,12 +62,15 @@ function colNumChangeTo(e) {
   if (e === colNum) {
     return;
   }
+  const data = getColData()
   colNum = e;
   colsHeight = new Array(colNum).fill(0);
   cols = new Array(0);
   for (let i = 0; i < colNum; i++) {
     cols.push(new Array(0));
   }
+  // 对已经有的数据进行换算而不是重新请求
+  data && computeByBefore(smoothArray(data))
 }
 
 /**
@@ -75,6 +78,38 @@ function colNumChangeTo(e) {
  */
 function getColData() {
   return cols;
+}
+
+function computeByBefore (list) {
+  list.forEach(i => {
+    // 需要进行插入的index
+    const index = findMinIndex(colsHeight);
+    // 进行插值操作
+    if (i.vHeight) {
+      cols[index].push(i);
+      colsHeight[index] += i.vHeight;
+    } else if (i.height) {
+      cols[index].push(i);
+      colsHeight[index] += i.height;
+    }
+  })
+}
+
+/**
+ * 将二维的数组数据展开
+ * @param {Array} arr 待展开数据
+ */
+function smoothArray (arr) {
+  if(!(arr instanceof Array)) {
+    return []
+  }
+  const newArr = []
+  arr.forEach(i => {
+    if (i instanceof Array) {
+      newArr.push(...i)
+    }
+  })
+  return newArr
 }
 
 export { colInsert, colNumChangeTo, getColData };

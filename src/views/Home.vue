@@ -50,7 +50,7 @@ export default {
   watch: {
     colNums (n) {
       colNumChangeTo(n);
-      this.getData()
+      this.infoList = getColData()
     }
   },
   methods: {
