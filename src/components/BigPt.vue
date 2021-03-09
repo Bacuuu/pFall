@@ -3,6 +3,12 @@
     <div class="img-wrap">
       <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="imgClass">
     </div>
+    <div class="poem">
+      <p>{{imgInfo && imgInfo.poem}}</p>
+      <p>{{imgInfo && imgInfo.poem}}</p>
+      <p>{{imgInfo && imgInfo.poem}}</p>
+      <p>{{imgInfo && imgInfo.poem}}</p>
+    </div>
     <div class="close-icon" @click="handleClose">
 
     </div>
@@ -68,6 +74,15 @@ export default {
     align-items: center;
     img {
       transition: all 1s;
+    }
+  }
+  .poem {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    p {
+      color: white;
+      margin: 4px 0;
     }
   }
   .close-icon {
