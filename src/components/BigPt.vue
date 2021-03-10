@@ -1,7 +1,7 @@
 <template>
   <div class="big-wrap" v-show="on">
     <div class="img-wrap">
-      <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="imgClass">
+      <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]">
     </div>
     <div class="poem">
       <p>{{imgInfo && imgInfo.poem}}</p>
@@ -22,12 +22,21 @@ export default {
     imgInfo: {
       imgSrc: '',
       poem: '',
-      time: ''
+      time: '',
+      width: 1,
+      height: 1
     }
   },
   computed: {
     on: function () {
       return this.imgInfo !== null
+    },
+    wVSh: function () {
+      let e = 'hwin'
+      if ((this.imgInfo && this.imgInfo.width && this.imgInfo.height) && this.imgInfo.width > 2 * this.imgInfo.height) {
+        e = 'wwin'
+      }
+      return e
     }
   },
   watch: {
@@ -132,7 +141,13 @@ export default {
     width: 0;
   }
   .img-zoomout {
-    height: 80%;
-    width: auto;
+    &.wwin {
+      width: 80%;
+      height: auto;
+    }
+    &.hwin {
+      width: auto;
+      height: calc(100% - 100px);
+    }
   }
 </style>
