@@ -1,7 +1,8 @@
 <template>
   <div class="big-wrap" v-show="on">
     <div class="img-wrap">
-      <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]">
+      <lazy-img :imgSrc="imgInfo ? imgInfo.imgSrc : ''" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]" />
+      <!-- <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]"> -->
     </div>
     <div class="poem">
       <p>{{imgInfo && imgInfo.poem}}</p>
@@ -16,8 +17,10 @@
 </template>
 
 <script>
+import LazyImg from './LazyImg'
 export default {
   name: 'BigPt',
+  components: { LazyImg },
   props: {
     imgInfo: {
       imgSrc: '',
