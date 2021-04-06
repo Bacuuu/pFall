@@ -1,6 +1,10 @@
 <template>
   <div class="pt-wrap" :style="wrapStyle" @click="clickPt">
-    <img v-lazy="imgInfo.imgSrc" alt="" :key="imgInfo.imgSrc" :style="imgStyle">
+    <lazy-img
+      :key="imgInfo.imgSrc"
+      :width="imgInfo.width"
+      :height="imgInfo.height"
+      :imgSrc="imgInfo.imgSrc" />
     <div class="pt-info">
       <span>{{imgInfo.poem}}</span>
     </div>
@@ -8,8 +12,10 @@
 </template>
 
 <script>
+import LazyImg from '@/components/LazyImg'
 export default {
   name: 'SinglePt',
+  components: { LazyImg },
   props: {
     imgInfo: {
       // 图片src
