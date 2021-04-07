@@ -61,9 +61,8 @@ export default {
       this.biggerPt = null
     },
     handleScroll: throttle(200, false, function () {
-      if ((document.documentElement.offsetHeight - document.documentElement.scrollTop - document.documentElement.clientHeight) < 200) {
+      if ((document.documentElement.offsetHeight - document.documentElement.scrollTop - document.documentElement.clientHeight) < 1200) {
         this.getData()
-        console.log('loading')
       }
     }),
     handleResize: throttle(200, false, function () {

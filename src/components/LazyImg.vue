@@ -78,7 +78,7 @@ export default {
       // 这个是屏幕的高度
       const winheight = window.innerHeight
       // 这个可用于判断离图片出现还有多远，进行data-src和src的swap
-      if (top - winheight < 300) {
+      if (top - winheight < 600) {
         this.status = 'pending'
         this.genImg()
       }
