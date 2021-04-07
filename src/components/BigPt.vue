@@ -1,8 +1,8 @@
 <template>
   <div class="big-wrap" v-show="on">
     <div class="img-wrap">
+      <!-- <img :src="imgInfo ? imgInfo.imgSrc : ''" :class="[imgClass, wVSh]" alt=""> -->
       <lazy-img :imgSrc="imgInfo ? imgInfo.imgSrc : ''" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]" />
-      <!-- <img v-lazy="imgInfo ? imgInfo.imgSrc : ''" alt="" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]"> -->
     </div>
     <div class="poem">
       <p>{{imgInfo && imgInfo.poem}}</p>
@@ -26,8 +26,13 @@ export default {
       imgSrc: '',
       poem: '',
       time: '',
-      width: 1,
-      height: 1
+      width: 0,
+      height: 0
+    }
+  },
+  data () {
+    return {
+      imgClass: 'img-zoomin'
     }
   },
   computed: {
@@ -43,13 +48,12 @@ export default {
     }
   },
   watch: {
-    on: function() {
-      this.toggleClass()
-    }
-  },
-  data () {
-    return {
-      imgClass: 'img-zoomin'
+    on: function(n) {
+      if (n) {
+        setTimeout(() => {
+          this.toggleClass()
+        }, 0)
+      }
     }
   },
   mounted () {
@@ -57,12 +61,15 @@ export default {
   },
   methods: {
     toggleClass () {
-      this.$nextTick(() => {
+      // this.$nextTick(() => {
         this.imgClass = this.imgClass === 'img-zoomin' ? 'img-zoomout' : 'img-zoomin'
-      })
+      // })
     },
     handleClose () {
-      this.$emit('handleClose')
+      this.toggleClass()
+      setTimeout(() => {
+        this.$emit('handleClose')      
+      }, 300);
     }
   }
 }
@@ -85,7 +92,7 @@ export default {
     justify-content: center;
     align-items: center;
     img {
-      transition: all 1s;
+      transition: all .3s;
     }
   }
   .poem {
@@ -140,12 +147,22 @@ export default {
     }
   }
   .img-zoomin {
-    height: 0;
-    width: 0;
-  }
-  .img-zoomout {
+    transform: scale(0);
     &.wwin {
       width: 80%;
+      max-width: 80%;
+      height: auto;
+    }
+    &.hwin {
+      width: auto;
+      height: calc(100% - 100px);
+    }
+  }
+  .img-zoomout {
+    transform: scale(1);
+    &.wwin {
+      width: 80%;
+      max-width: 80%;
       height: auto;
     }
     &.hwin {
