@@ -4,11 +4,8 @@
       <!-- <img :src="imgInfo ? imgInfo.imgSrc : ''" :class="[imgClass, wVSh]" alt=""> -->
       <lazy-img :imgSrc="imgInfo ? imgInfo.imgSrc : ''" :key="imgInfo === null ? 'nu1l' : imgInfo.imgSrc" :class="[imgClass, wVSh]" />
     </div>
-    <div class="poem">
-      <p>{{imgInfo && imgInfo.poem}}</p>
-      <p>{{imgInfo && imgInfo.poem}}</p>
-      <p>{{imgInfo && imgInfo.poem}}</p>
-      <p>{{imgInfo && imgInfo.poem}}</p>
+    <div class="poem" v-if="imgInfo && imgInfo.poem">
+      <p  v-for="(item, index) in imgInfo.poem.split('\n')" :key="index">{{item}}</p>
     </div>
     <div class="close-icon" @click="handleClose">
 
