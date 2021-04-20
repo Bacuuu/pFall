@@ -28,7 +28,8 @@ export default {
     return {
       colNums: 4,
       infoList: [],
-      biggerPt: null
+      biggerPt: null,
+      current: 0
     }
   },
   created() {
@@ -79,9 +80,16 @@ export default {
       }
     },
     getData () {
-      this.$axios.get('/api/getImg')
+      this.$axios.get('/api/v1/photo/get', {
+        params: {
+          limit: 20,
+          current: this.current
+        }
+      })
         .then(r => {
-          r.data.forEach(i => {
+          const { list } = r.data.data
+          this.current += list.length
+          list.forEach(i => {
             colInsert(i)
           })
           this.infoList = getColData()
