@@ -6,7 +6,7 @@
       :height="imgInfo.height"
       :imgSrc="imgInfo.imgSrc" />
     <div class="pt-info">
-      <span>{{imgInfo.poem}}</span>
+      <span>{{imgInfo.title}}</span>
     </div>
   </div>
 </template>
