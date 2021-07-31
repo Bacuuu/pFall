@@ -40,6 +40,10 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.handleScroll, true);
     window.addEventListener('resize', this.handleResize, true);
+    this.$once('hook:beforeDestroy', () => {
+      window.removeEventListener('scroll', this.handleScroll, true)
+      window.removeEventListener('resize', this.handleResize, true)
+    })
   },
   computed: {
     columnStyle () {
@@ -88,11 +92,19 @@ export default {
       })
         .then(r => {
           const { list } = r.data.data
-          this.current += list.length
-          list.forEach(i => {
-            colInsert(i)
-          })
-          this.infoList = getColData()
+          if (list && list.length) {
+            this.current += list.length
+            list.forEach(i => {
+              colInsert(i)
+            })
+            this.infoList = getColData()
+          } else {
+            window.removeEventListener('scroll', this.handleScroll, true)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          window.removeEventListener('scroll', this.handleScroll, true)
         })
     }
   }
