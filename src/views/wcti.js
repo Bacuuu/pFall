@@ -124,8 +124,7 @@ function smoothArray (arr) {
       newArr.push(...i)
     }
   })
-  // console.log(newArr.sort(i => i.time).reverse().map(i => i.time))
-  return newArr.sort((x, y) => new Date(y.time) - new Date(x.time))
+  return newArr.sort((x, y) => y.time - x.time)
 }
 
 export { colInsert, colNumChangeTo, getColData };
