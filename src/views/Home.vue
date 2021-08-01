@@ -1,7 +1,7 @@
 <template>
   <div class="pf-wrap">
     <div class="pf-column" v-for="(item, index) in infoList" :key="index" :style="columnStyle">
-      <single-pt class="single-pt" v-for="pt in item" :key="pt.imgSrc" :imgInfo="pt" @clickPt="clickPt(pt)" />
+      <single-pt class="single-pt" v-for="(pt, index) in item" :key="index" :imgInfo="pt" @clickPt="clickPt(pt)" />
     </div>
     <big-pt :imgInfo="biggerPt" @handleClose="closeBigPt"></big-pt>
   </div>
