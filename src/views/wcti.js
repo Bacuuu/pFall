@@ -4,6 +4,8 @@ let colNum = 0;
 let colsHeight = null;
 // 每列的真实数据储存, [[{ }], [{ }], [{ }]]
 let cols = null;
+// 当前视图的宽度，用于计算大致的vheiight对应高度
+let viewWidth = 0
 
 /**
  * 数组中最小值的index，多个取第一个
@@ -35,7 +37,13 @@ function colInsert(data) {
     colsHeight[index] += data.vHeight;
   } else {
     cols[index].push(data);
-    colsHeight[index] += data.height;
+    // 这里对vheight进行换算
+    // 先拿到大致的每列宽度
+    const width = viewWidth / colNum
+    // 图片width / 图片height == 列width / height（非vHeight是auto）
+    const _height = width / (data.width / data.height)
+    colsHeight[index] += _height;
+    // colsHeight[index] += data.height;
   }
 }
 
@@ -62,6 +70,7 @@ function colNumChangeTo(e) {
   if (e === colNum) {
     return;
   }
+  viewWidth = document.body.offsetWidth
   const data = getColData()
   colNum = e;
   colsHeight = new Array(colNum).fill(0);
@@ -90,7 +99,13 @@ function computeByBefore (list) {
       colsHeight[index] += i.vHeight;
     } else if (i.height) {
       cols[index].push(i);
-      colsHeight[index] += i.height;
+      // 这里对height进行换算
+      // 先拿到大致的每列宽度
+      const width = viewWidth / colNum
+      // 图片width / 图片height == 列width / height（非vHeight是auto）
+      const _height = width / (i.width / i.height)
+      colsHeight[index] += _height
+      // colsHeight[index] += i.height;
     }
   })
 }
@@ -109,7 +124,8 @@ function smoothArray (arr) {
       newArr.push(...i)
     }
   })
-  return newArr
+  // console.log(newArr.sort(i => i.time).reverse().map(i => i.time))
+  return newArr.sort((x, y) => new Date(y.time) - new Date(x.time))
 }
 
 export { colInsert, colNumChangeTo, getColData };
